@@ -1,0 +1,590 @@
+<!--صفحه الهدف منها عمل استوديو للصور يضم صور مهمه في الاحياء مقسمه علي حسب شباتر المنهج-->
+<!--الصفحه كامله تشمل اكواد html, css,js-->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استوديو dem bio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* التنسيق العام */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        :root {
+            --navbar-bg: rgba(255, 255, 255, 0.95);
+            --navbar-text: #2c3e50;
+            --navbar-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            --button-bg: #145fb0;
+            --button-text: white;
+            --section-bg: #ffffff;
+            --footer-bg: #1a365d;
+            --footer-text: white;
+        }
+
+        [data-theme="dark"] {
+            --navbar-bg: rgba(26, 26, 26, 0.95);
+            --navbar-text: #ffffff;
+            --navbar-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+            --button-bg: #d25ac2;
+            --button-text: #000000;
+            --section-bg: #1e1e1e;
+            --footer-bg: #0d1b2a;
+            --footer-text: #ffffff;
+        }
+
+        body {
+            background: var(--section-bg);
+            color: var(--navbar-text);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* شريط التنقل */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: var(--navbar-bg);
+            box-shadow: var(--navbar-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            height: 50px;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--navbar-text);
+            transition: color 0.3s;
+        }
+
+        .logo-text:hover {
+            color: #d25ac2;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            margin: 0 auto; /* توسيط الروابط */
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--navbar-text);
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d25ac2;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .login-button {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-button:hover {
+            background-color: #1c5a9b;
+            transform: scale(1.05);
+        }
+
+        /* زر التبديل بين الوضعين */
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--navbar-text);
+            transition: color 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: #d25ac2;
+        }
+
+        /* قسم الاستوديو */
+        .studio-section {
+            padding: 100px 5%;
+            text-align: center;
+            background: linear-gradient(rgba(74, 69, 69, 0.7), rgba(13, 21, 70, 0.7)), url('studio-bg.jpg') center/cover fixed;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .studio-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .studio-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 50px;
+            animation: fadeInUp 1s ease-out 0.3s;
+        }
+
+        .studio-boxes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .studio-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .studio-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .studio-box h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .studio-box p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .discover-button {
+            background-color: #d25ac2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .discover-button:hover {
+            background-color: #c1d5ea;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* الفوتر */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 30px 5%;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info, .platform-info, .social-media {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .contact-info h3, .platform-info h3, .social-media h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .contact-info p {
+            margin: 8px 0;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* محاذاة لليمين */
+        }
+
+        .contact-info i {
+            margin-left: 8px;
+            font-size: 1rem;
+        }
+
+        .platform-info {
+            text-align: center;
+        }
+
+        .platform-info img {
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+        .platform-info p {
+            font-size: 1rem;
+            color: #ddd;
+        }
+
+        .social-media {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+            align-items: flex-start; /* محاذاة لليسار */
+        }
+
+        .social-icon-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            font-size: 1.8rem;
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            color: #d25ac2;
+        }
+
+        .footer-bottom {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: #ddd;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .navbar-right {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .studio-boxes {
+                grid-template-columns: repeat(1, 1fr);
+            }
+
+            .footer-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-info, .platform-info, .social-media {
+                flex: none;
+                margin-bottom: 15px;
+                align-items: center;
+            }
+
+            .contact-info p {
+                justify-content: center;
+            }
+
+            .social-media {
+                align-items: center;
+            }
+        }
+
+        footer {
+            background-color: rgb(28, 14, 83);
+            color: var(--footer-text);
+            padding: 30px 5%;
+            text-align: center;
+            font-size: 0.9rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .contact-info p {
+            margin: 8px 0;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-info i {
+            margin-left: 8px;
+            font-size: 1rem;
+        }
+        
+
+        .footer-logo {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .footer-logo-img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .footer-logo-text {
+            font-size: 1rem;
+            color: var(--footer-text);
+            margin: 0;
+        }
+
+        .social-media {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .social-media h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .social-icon-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .social-icon {
+            font-size: 1.8rem;
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            color: #d25ac2;
+        }
+
+        .footer-bottom {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: #ddd;
+        } 
+
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <a href="index.html" class="logo">
+                <img src="dema1.png" alt="DEMA BIO Logo" class="logo">
+            </a>
+            <span class="logo-text">Dema Bio</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">الرئيسية</a>
+            <a href="contact_us.html">تواصل معنا</a>
+        </div>
+        
+        <div class="navbar-right">
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i> <!-- أيقونة القمر للوضع الفاتح -->
+            </button>
+            <button class="login-button" onclick="window.location.href='join.html'">تسجيل دخول</button>
+        </div>
+    </nav>
+
+    <!-- قسم الاستوديو -->
+    <div class="studio-section">
+        <h1 class="studio-title">استوديو خاص بفصول الأحياء</h1>
+        <p class="studio-subtitle">استكشف فصول الأحياء مع أفضل المناهج التعليمية</p>
+        <div class="studio-boxes">
+            <div class="studio-box">
+                <h3>الفصل الأول</h3>
+                <p>تعرف على أساسيات الأحياء في الفصل الأول.</p>
+                <button class="discover-button">اكتشف الآن</button>
+            </div>
+            <div class="studio-box">
+                <h3>الفصل الثاني</h3>
+                <p>تعرف على أساسيات الأحياء في الفصل الثاني.</p>
+                <button class="discover-button">اكتشف الآن</button>
+            </div>
+            <div class="studio-box">
+                <h3>الفصل الثالث</h3>
+                <p>تعرف على أساسيات الأحياء في الفصل الثالث.</p>
+                <button class="discover-button">اكتشف الآن</button>
+            </div>
+            <div class="studio-box">
+                <h3>الفصل الرابع</h3>
+                <p>تعرف على أساسيات الأحياء في الفصل الرابع.</p>
+                <button class="discover-button">اكتشف الآن</button>
+            </div>
+            <div class="studio-box">
+                <h3>الفصل الخامس</h3>
+                <p>تعرف على أساسيات الأحياء في الفصل الخامس.</p>
+                <button class="discover-button">اكتشف الآن</button>
+            </div>
+            <div class="studio-box">
+                <h3>الفصل السادس</h3>
+                <p>تعرف على أساسيات الأحياء في الفصل السادس.</p>
+                <button class="discover-button">اكتشف الآن</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <!-- معلومات الاتصال -->
+            <div class="contact-info">
+                <h3>معلومات الاتصال</h3>
+                <p>
+                    <a href="tel:+01270187606">
+                      <i class="fas fa-phone"></i> 
+                      <span class="phone-number">+01270187606</span>
+                    </a>
+                  </p>
+                  <p>
+                    <a href="tel:+01225010188">
+                      <i class="fas fa-phone"></i> 
+                      <span class="phone-number">+01225010188</span>
+                    </a>
+                
+                <p><i class="fas fa-envelope"></i> <span class="email">info@demabio.com</span></p>
+            </div>
+    
+            <!-- اللوجو والعنوان -->
+            <div class="footer-logo">
+                <img src="dema1.png" alt="DEMA BIO Logo" class="footer-logo-img">
+                <p class="footer-logo-text">المنصة التعليمية الأفضل لتدريس الأحياء لطلاب الثانوية العامة</p>
+            </div>
+    
+            <!-- وسائل التواصل الاجتماعي -->
+            <div class="social-media">
+                <h3>تابعنا على</h3>
+                <div class="social-icon-container">
+                    <a href="https://www.facebook.com/share/18dRZcxuUY/?mibextid=wwXIfr" class="social-icon" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://twitter.com/demabio" class="social-icon" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/demabio" class="social-icon" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+        <!-- حقوق النشر -->
+        <div class="footer-bottom">
+            <p>&copy; 2025 Dema Bio. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript لتبديل الوضع
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        // تحقق من الإعدادات المحفوظة
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            const icon = themeToggle.querySelector('i');
+            if (theme === 'dark') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+    </script>
+</body>
+</html>
